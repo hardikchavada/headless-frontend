@@ -6,7 +6,7 @@ const WpPosts = () => {
     //
     const [myData, setMyData] = useState([]);
     useEffect(() => {
-        axios.get('https://staging.scubeinteriors.com/wp-json/wp/v2/posts')
+        axios.get('https://staging.scubeinteriors.com/wp-json/mbp/v1/myposts')
         .then((res) => {
             console.log(res.data);
             setMyData(res.data);
@@ -15,18 +15,29 @@ const WpPosts = () => {
 
     return ( 
         <>
-            <h2>Axios Test</h2>            
-            {
-                myData.map((post) => {
-                    const {id, title, content} = post;
-                    return (
-                        <div className="card1" key={id}>
-                            <h1>{title.rendered}</h1>
-                            <p>{content.rendered}</p>
-                        </div> 
-                    );                                       
-                })
-            }
+            <h2>Axios Test</h2>
+            {/* Card Container start */}
+            <div className="grid grid-cols-3 lg:gap-3 justify-items-center">
+                {
+                    myData.map((post) => {
+                        const {id, title, content, featuredImgUrl} = post;
+                        return (
+                            <div className="max-w-sm rounded overflow-hidden shadow-lg" key={post.id}>
+                                <img className="w-full" src={post.featuredImgUrl} alt="Sunset in the mountains" />
+                                <div className="px-6 py-4">
+                                    <h1 className="font-bold text-xl mb-2">{post.title}</h1>
+                                    <p className="text-gray-600 text-left" dangerouslySetInnerHTML={{__html: post.content}}></p>
+                                </div>
+                                <div className="px-6 pt-4 pb-2">
+                                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
+                                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
+                                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
+                                </div>
+                            </div>                     
+                        );                                       
+                    })
+                }
+            </div>            
         </>
      );
 }
