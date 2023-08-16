@@ -20,6 +20,7 @@ const WpPosts = () => {
             <div className="grid grid-cols-3 lg:gap-3 justify-items-center">
                 {
                     myData.map((post) => {
+                        // eslint-disable-next-line
                         const {id, title, content, featuredImgUrl} = post;
                         return (
                             <div className="max-w-sm rounded overflow-hidden shadow-lg" key={post.id}>
